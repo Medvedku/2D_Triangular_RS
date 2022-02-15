@@ -1,9 +1,9 @@
 import numpy as np
 
 
-def B_mat_RM(x, y, xg, yg):
+def B_mat_RM(x: list, y: list, xg:float, yg:float):
     """Computes strain-displacement matrix (B matrix) for bending moments
-    and shear forces
+    and shear forces.
 
         Arg:
             x:     X coordinates of the element  [list]
@@ -78,3 +78,43 @@ def B_mat_RM(x, y, xg, yg):
     bmat_s = np.concatenate((bmat_s1, bmat_s2, bmat_s3), axis=1)
 
     return bmat_b, bmat_s, area
+
+def NodeStress(D_mat_b, D_mat_s, xg, yg, u):
+    """Computes stresses at the Gauss points and evaluates values to the nodes.
+
+        Arg:
+            D_mat_b:    X coordinates of the element  [list]
+            D_mat_s:    Y coordinates of the element  [list]
+            xg:         Gauss point - local X coordinate [float]
+            yg:         Gauss point - local X coordinate [float]
+            u:          Nodal displacements
+        Returns:
+            ndStress:   Nodal stress matrix
+    """
+    pass
+
+
+def D_mat(h, E, mi):
+    """Computes constitutive matrices for bending
+    moments and shear forces of element.
+
+        Arg:
+            h:          Thickness of element  [m, float]
+            E:          Young modulus of elasticity  [Pa, int]
+            mi:         Poissons number [float]
+        Returns:
+            D_mat_b:    Constitutive matrix for bending moments
+            D_mat_s:    Constitutive matrix for shear forces
+    """
+
+    D_mat_b = (h**3 / 12) * (E / (1 - mi**2)) * np.array(
+        [[1, mi,   0],
+         [mi, 1,   0],
+         [0,  0,   (1-mi)/2]])
+
+    D_mat_s = (h*5 / 6) * (E / (2*(1 + mi))) * np.array(
+        [[1,  0],
+         [0,  1]])
+
+
+    return D_mat_b, D_mat_s
