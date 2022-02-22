@@ -39,8 +39,7 @@ def B_mat_RM(x: list, y: list, xg:float, yg:float):
 
     jac_im = np.linalg.inv(jac_m)
 
-    area2 = abs(jac_m[0, 0]*jac_m[1, 1] - jac_m[1, 0]*jac_m[0, 1])
-    area = area2 / 2
+    area = abs(jac_m[0, 0]*jac_m[1, 1] - jac_m[1, 0]*jac_m[0, 1]) / 2
 
     Ndx = np.zeros((3, 1))
     Ndx[0] = jac_im[0, 0]*loc_dxN[0] + jac_im[0, 1]*loc_dyN[0]
@@ -91,6 +90,7 @@ def NodeStress(D_mat_b, D_mat_s, xg, yg, u):
         Returns:
             ndStress:   Nodal stress matrix
     """
+
     pass
 
 
@@ -115,6 +115,5 @@ def D_mat(h, E, mi):
     D_mat_s = (h*5 / 6) * (E / (2*(1 + mi))) * np.array(
         [[1,  0],
          [0,  1]])
-
 
     return D_mat_b, D_mat_s
