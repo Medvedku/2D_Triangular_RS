@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import mpl_toolkits.mplot3d as plt3d
 from matplotlib import cm
 
+import surf2stl #import from local
 
 def monkey(x,y,a):
     z = (x *(x**2 - 3*y**2))/a**2
@@ -37,7 +38,7 @@ def breather(u, v, a=2/5):
          np.cos((1-a**2)**(1/2)*v) + np.cos(v)*np.sin((1-a**2)**(1/2)*v))) / (a*((1-a**2)*np.cosh(a*u)**2+a**2*np.sin((1-a**2)**(1/2)*v)**2))
     return x, y, z
 
-mesh = 25
+mesh = 250
 
 # <<<<<<<<<<<<<  MONKEY SLUT >>>>>>>>>>>>>>>>>>
 # x = np.arange(-0.5, 0.5+1/mesh, 1/mesh)
@@ -121,7 +122,8 @@ ax.set_zlabel("z")
 surf_def   = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm,
                 linewidth=0, antialiased=True, alpha = 0.5 )
 
-plt.show()
+# plt.show()
 
+surf2stl.write('breather.stl', X, Y, Z)
 
 pass
