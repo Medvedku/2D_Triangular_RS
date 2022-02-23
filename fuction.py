@@ -29,6 +29,14 @@ def sea_shell(u, v, a=2, b=6*np.pi, c=3*np.pi):
     z = np.e**(u/b) *np.sin(v) - np.e**(u/c) - np.sin(v) + 1
     return x, y, z
 
+def breather(u, v, a=2/5):
+    x = -u + ((2*(1-a**2)*np.cosh(a*u)*np.sinh(a*u)) / (a*((1-a**2)*np.cosh(a*u)**2+a**2*np.sin((1-a**2)**(1/2)*v)**2)))
+    y = (2*(1-a**2)**(1/2)*np.cosh(a*u) * (-(1-a**2)**(1/2)*np.cos(v) *
+         np.cos((1-a**2)**(1/2)*v) - np.sin(v)*np.sin((1-a**2)**(1/2)*v))) / (a*((1-a**2)*np.cosh(a*u)**2+a**2*np.sin((1-a**2)**(1/2)*v)**2))
+    z = (2*(1-a**2)**(1/2)*np.cosh(a*u) * (-(1-a**2)**(1/2)*np.sin(v) *
+         np.cos((1-a**2)**(1/2)*v) + np.cos(v)*np.sin((1-a**2)**(1/2)*v))) / (a*((1-a**2)*np.cosh(a*u)**2+a**2*np.sin((1-a**2)**(1/2)*v)**2))
+    return x, y, z
+
 mesh = 25
 
 # <<<<<<<<<<<<<  MONKEY SLUT >>>>>>>>>>>>>>>>>>
@@ -65,18 +73,18 @@ mesh = 25
 #     for j in range(len(U[0])):
 #         X[i,j], Y[i,j], Z[i,j] = mobius(U[i,j], V[i,j], acko)
 
-# <<<<<<<<<<<<< aSTEROIDS >>>>>>>>>>>>>>>>>>
-u = np.arange(-np.pi/2, np.pi/2+np.pi/mesh, np.pi/mesh)
-v = np.arange(-np.pi, np.pi+2*np.pi/mesh, 2*np.pi/mesh)
-U, V = np.meshgrid(u, v)
+# # <<<<<<<<<<<<< aSTEROIDS >>>>>>>>>>>>>>>>>>
+# u = np.arange(-np.pi/2, np.pi/2+np.pi/mesh, np.pi/mesh)
+# v = np.arange(-np.pi, np.pi+2*np.pi/mesh, 2*np.pi/mesh)
+# U, V = np.meshgrid(u, v)
 
-X = np.zeros(np.shape(U))
-Y = np.zeros(np.shape(U))
-Z = np.zeros(np.shape(U))
-acko = 1
-for i in range(len(U)):
-    for j in range(len(U[0])):
-        X[i,j], Y[i,j], Z[i,j] = astroidal(U[i,j], V[i,j])
+# X = np.zeros(np.shape(U))
+# Y = np.zeros(np.shape(U))
+# Z = np.zeros(np.shape(U))
+# acko = 1
+# for i in range(len(U)):
+#     for j in range(len(U[0])):
+#         X[i,j], Y[i,j], Z[i,j] = astroidal(U[i,j], V[i,j])
 
 # <<<<<<<<<<<<< Sea Shell >>>>>>>>>>>>>>>>>>
 # u = np.arange(0, 6*np.pi+6*np.pi/mesh, 6*np.pi/mesh)
@@ -91,6 +99,18 @@ for i in range(len(U)):
 #     for j in range(len(U[0])):
 #         X[i,j], Y[i,j], Z[i,j] = sea_shell(U[i,j], V[i,j])
 
+# <<<<<<<<<<<<< Breather >>>>>>>>>>>>>>>>>>
+u = np.arange(-14, 14+28/mesh, 28/mesh)
+v = np.arange(-38, 38+(2*38)/mesh, (2*38)/mesh)
+U, V = np.meshgrid(u, v)
+
+X = np.zeros(np.shape(U))
+Y = np.zeros(np.shape(U))
+Z = np.zeros(np.shape(U))
+acko = 1
+for i in range(len(U)):
+    for j in range(len(U[0])):
+        X[i, j], Y[i, j], Z[i, j] = breather(U[i, j], V[i, j])
 
 
 fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
